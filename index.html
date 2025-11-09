@@ -133,7 +133,6 @@
     <button onclick="generate()">✨ Randomize</button>
   </div>
   <script>
-    // Lists extracted from the Perchance generator
     const lists = {
       album: [
         "NOVELTY", "WORSHIP", "Flagstaff", "HEART TO HEART", "Kitsune", "Here Right Now", "ur a jerk!!, vol. 1", "BABYLON", "eaten tangerines", "REFLECTIONS", "FYEW-CYEAH", "Hex Arpeggiator", "wonder.", "End Of Summer", "ur a jerk!!, vol. 2", "Customize", "one way train: arrival"
@@ -161,7 +160,6 @@
       ]
     };
 
-    // Output templates (examples from the original generator)
     const templates = [
       "There is an unheard [album] song with [feature] on it. @[feature] Info",
       "There is an unheard [album] song that is produced by [prod]. @[feature] Info",
@@ -171,15 +169,32 @@
       "[album] was originally titled [album]. @[feature] Info",
       "[album] was meant to be a collab album with [feature]. @[feature] Info",
       "[seller] has info on [album]. @[feature] Info",
-      "[song] drops this Friday, according to [news]. @[feature] News"
+      "[song] drops this Friday, according to [news]. @[feature] News",
+      "[song] was supposed to be on [album] but got cut. @[feature] Info",
+      "[feature] has an unreleased verse for [song]. @[feature] Info",
+      "[album] has [feature] on multiple tracks that never dropped. @[feature] Info",
+      "[prod] produced most of [album] but only [song] made the final cut. @[feature] Info",
+      "[seller] is selling the full [album] sessions from [year]. @[feature] Info",
+      "[news] reports that [song] is dropping next month. @[feature] News",
+      "[ref] confirmed that [song] exists and is finished. @[feature] Info",
+      "[album] was supposed to drop in [year] but got pushed back. @[feature] Info",
+      "[feature] was supposed to be on [song] but got replaced last minute. @[feature] Info",
+      "[prod] has the original version of [song] before it was changed. @[feature] Info",
+      "[seller] leaked a snippet of [song] from [album]. @[feature] Info",
+      "[news] says [feature] is working on new music with [prod]. @[feature] News",
+      "There are multiple versions of [song] with different [feature] verses. @[feature] Info",
+      "[album] was recorded in [year] but shelved until recently. @[feature] Info",
+      "[ref] heard [song] and says it's one of the best tracks from [album]. @[feature] Info",
+      "[seller] has unreleased [album] tracks that never made it to streaming. @[feature] Info",
+      "[song] was originally produced by [prod] but got remade by someone else. @[feature] Info",
+      "[prod] has unreleased beats that were meant for [album]. @[feature] Info",
+      "[seller] is selling [prod]'s original production files for [song]. @[feature] Info"
     ];
 
-    // Helper: pick a random item from an array
     function pick(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // Replace [listname] in template with a random value from that list
     function fillTemplate(template) {
       return template.replace(/\[([a-z]+)\]/gi, (_, listName) => {
         const list = lists[listName.toLowerCase()];
@@ -187,14 +202,12 @@
       });
     }
 
-    // Generate and display output
     function generate() {
       const template = pick(templates);
       const output = fillTemplate(template);
       document.getElementById('output').textContent = output;
     }
 
-    // Generate once on page load
     generate();
   </script>
 </body>
