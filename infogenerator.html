@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goofy's Info Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      background: #000000;
+      color: #ffffff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: background 0.5s;
+    }
+    .container {
+      background: #1a1a1a;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5em 2em 2em 2em;
+      max-width: 420px;
+      width: 90vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2em 0;
+      animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1) 1;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 2.1em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.5em;
+      color: #ffffff;
+      text-shadow: none;
+      text-align: center;
+    }
+    .output {
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+      font-size: 1.25em;
+      font-weight: 500;
+      color: #ffffff;
+      background: #0a0a0a;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+      padding: 1.2em 1.5em;
+      min-height: 3.5em;
+      text-align: center;
+      transition: background 0.3s, box-shadow 0.3s;
+      word-break: break-word;
+      border: 1px solid rgba(255,255,255,0.1);
+      user-select: text;
+    }
+    button {
+      margin-top: 0.5em;
+      padding: 0.7em 2.5em;
+      font-size: 1.1em;
+      font-family: inherit;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 1px solid #ffffff;
+      background: #ffffff;
+      color: #000000;
+      box-shadow: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      outline: none;
+      position: relative;
+      z-index: 1;
+    }
+    button:hover, button:focus {
+      background: #000000;
+      color: #ffffff;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: none;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.2em 0.5em 1.5em 0.5em;
+        max-width: 98vw;
+      }
+      h1 {
+        font-size: 1.3em;
+      }
+      .output {
+        font-size: 1em;
+        padding: 0.8em 0.5em;
+      }
+      button {
+        font-size: 1em;
+        padding: 0.7em 1.2em;
+      }
+    }
+    .footer {
+      margin-top: 2em;
+      font-size: 0.95em;
+      color: #888888;
+      text-align: center;
+      letter-spacing: 0.5px;
+      opacity: 0.7;
+    }
+    .footer a {
+      color: #ffffff;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .footer a:hover {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Goofy's Info Generator</h1>
+    <div class="output" id="output"></div>
+    <button onclick="generate()">✨ Randomize</button>
+  </div>
+  <script>
+    // Lists extracted from the Perchance generator
+    const lists = {
+      album: [
+        "NOVELTY", "WORSHIP", "Flagstaff", "HEART TO HEART", "Kitsune", "Here Right Now", "ur a jerk!!, vol. 1", "BABYLON", "eaten tangerines", "REFLECTIONS", "FYEW-CYEAH", "Hex Arpeggiator", "wonder.", "End Of Summer", "ur a jerk!!, vol. 2", "Customize", "one way train: arrival"
+      ],
+      feature: [
+        "Goofy", "LuCasPluto", "Melrose", "electrodc", "Gothfukker", "Divinity", "velourium", "tys0n", "Lionel Scott", "Jeen", "Cloud Soulja", "Zhang Yong", "Frasier", "IGB", "Johnny Montilla", "bbno$", "texo", "Chaddanooga", "athena", "Dave Blunts", "Kanye West", "blizziboi"
+      ],
+      prod: [
+        "Goofy", "LuCasPluto", "Melrose", "electrodc", "Gothfukker", "Divinity", "velourium", "tys0n", "Lionel Scott", "Jeen", "ahmed 2.0", "Zhang Yong", "Frasier", "WindyBro", "IGB", "athena"
+      ],
+      year: [
+        "2020", "2021", "2022", "2023", "2024", "2025"
+      ],
+      song: [
+        "CHOPPED", "DOGDOGDAWG", "MEME RAP", "FRASIER", "scars", "Neon Nights", "tease", "Aretha", "lose control", "function", "BENZ", "xavier renegade angel", "hotspot", "THE WORLD", "CATWALK // MISUSED", "GROOMED ON TWITTER", "Get Rowdy"
+      ],
+      ref: [
+        "Consequence", "CyHi", "LuCasPluto", "nicole", "Hauska", "Goofy", "texo", "athena", "Zhang Yong"
+      ],
+      seller: [
+        "Waterfalls", "Luit", "Viper", "Voulchers", "GucciTunes", "Pac", "A Leaked.cx vaulter", "Elijah", "Alek", "Urnotsellingye", "Urnotsellingcruza", "DUDENEWS", "GFREE", "Mos", "You"
+      ],
+      news: [
+        "Kurrco", "TMZ", "HipHopDX", "Complex", "Pitchfork", "The Fader", "XXL", "Rolling Stone", "Billboard", "The Source", "HotNewHipHop", "RapRadar", "DJ Akademiks", "No Jumper", "The Breakfast Club", "The Joe Budden Podcast", "The Shade Room", "The Neighborhood Talk", "The Jasmine Brand", "The YBF", "The Grio", "The Root", "The Daily Beast", "The New York Times", "The Washington Post", "The Los Angeles Times", "The Chicago Tribune", "The Boston Globe", "42CEO", "Ye himself", "Dave Blunts", "DJ Swamp Izzo", "DJ Pharris", "You", "DJ Drama", "DJ Premier", "DJ Quik", "DJ Screw", "DJ Paul", "an anonymous source", "NoNDANetwork"
+      ]
+    };
+
+    // Output templates (examples from the original generator)
+    const templates = [
+      "There is an unheard [album] song with [feature] on it. @[feature] Info",
+      "There is an unheard [album] song that is produced by [prod]. @[feature] Info",
+      "There is a [ref] ref for [song]. @[feature] Info",
+      "[album] was worked on in [year]. @[feature] Info",
+      "A sequel to [album] was once in production. @[feature] Info",
+      "[album] was originally titled [album]. @[feature] Info",
+      "[album] was meant to be a collab album with [feature]. @[feature] Info",
+      "[seller] has info on [album]. @[feature] Info",
+      "[song] drops this Friday, according to [news]. @[feature] News"
+    ];
+
+    // Helper: pick a random item from an array
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Replace [listname] in template with a random value from that list
+    function fillTemplate(template) {
+      return template.replace(/\[([a-z]+)\]/gi, (_, listName) => {
+        const list = lists[listName.toLowerCase()];
+        return list ? pick(list) : `[${listName}]`;
+      });
+    }
+
+    // Generate and display output
+    function generate() {
+      const template = pick(templates);
+      const output = fillTemplate(template);
+      document.getElementById('output').textContent = output;
+    }
+
+    // Generate once on page load
+    generate();
+  </script>
+</body>
+</html>
